@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}推荐结果 - {{ user.user_id }}{% endblock %}
+
+{% block content %}
+<h1>菜品推荐</h1>
+<p>为 <strong>{{ user.user_id }}</strong> 推荐 (共 {{ user.review_count }} 条评论)</p>
+
+<h3 class="mt-3">用户偏好标签</h3>
+<div class="tag-cloud mb-4">
+{% for tag in (user.preference_tags or [])[:10] %}
+{% set sent = tag.avg_sentiment %}
+{% if sent > 0.65 %}
+<span class="tag-item tag-positive">{{ tag.word }}</span>
+{% elif sent > 0.35 %}
+<span class="tag-item tag-neutral">{{ tag.word }}</span>
+{% else %}
+<span class="tag-item tag-negative">{{ tag.word }}</span>
+{% endif %}
+{% endfor %}
+</div>
+
+<h3>推荐结果</h3>
+{% for r in results %}
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <h5 class="card-title mb-1">
+                    <a href="{{ url_for('dish_detail', dish_id=r.dish_id) }}">{{ r.dish_name }}</a>
+                    <small class="text-muted">{{ r.restaurant }}</small>
+                </h5>
+                <div class="tag-cloud mt-2">
+                {% for tag in (r.matching_tags or []) %}
+                <span class="tag-item tag-positive">{{ tag }}</span>
+                {% endfor %}
+                </div>
+            </div>
+            <div style="min-width: 120px; text-align: right;">
+                <div class="similarity-bar">
+                    <div class="similarity-fill" style="width: {{ (r.score * 100)|round }}%;"></div>
+                </div>
+                <small class="text-muted">相似度: {{ "%.2f"|format(r.score) }}</small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<a href="{{ url_for('user_detail', user_id=user.user_id) }}" class="btn btn-outline-secondary">返回用户画像</a>
+{% endblock %}

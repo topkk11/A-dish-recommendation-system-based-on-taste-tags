@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+output/
+*.p
+*.npz
+
+# uv / Python version manager
+.python-version
+pyproject.toml
+uv.lock
+
+# datasets
+文本挖掘数据集/
+
+prompt.md
+introduction.md
+plan.md

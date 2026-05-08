@@ -1,0 +1,12 @@
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag-item { padding: 4px 12px; border-radius: 20px; font-size: 0.9rem; white-space: nowrap; }
+.tag-positive { background: #d4edda; color: #155724; }
+.tag-neutral { background: #fff3cd; color: #856404; }
+.tag-negative { background: #f8d7da; color: #721c24; }
+
+.sentiment-bar { height: 8px; border-radius: 4px; }
+.similarity-bar { height: 20px; border-radius: 4px; background: #e9ecef; }
+.similarity-fill { height: 100%; border-radius: 4px; background: #0d6efd; }
+
+.review-keywords { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.review-keyword { padding: 1px 8px; border-radius: 10px; font-size: 0.75rem; background: #e9ecef; }

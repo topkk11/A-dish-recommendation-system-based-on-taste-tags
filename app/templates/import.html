@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}导入数据 - 口味推荐系统{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">导入评论数据</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">上传 CSV 文件</h5>
+                <form method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="csv_file" class="form-label">选择 CSV 文件</label>
+                        <input type="file" class="form-control" id="csv_file" name="csv_file" accept=".csv" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">上传并处理</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">CSV 格式说明</h5>
+                <p>文件需包含以下列：</p>
+                <ul>
+                    <li><code>review_id</code> - 评论ID</li>
+                    <li><code>user_id</code> - 用户ID</li>
+                    <li><code>dish_id</code> - 菜品ID</li>
+                    <li><code>dish_name</code> - 菜品名称</li>
+                    <li><code>restaurant</code> - 餐厅名称</li>
+                    <li><code>review_text</code> - 评论内容</li>
+                    <li><code>rating</code> - 评分 (1-5)</li>
+                    <li><code>date</code> - 日期</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

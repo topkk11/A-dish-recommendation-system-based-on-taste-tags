@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}用户画像 - {{ user.user_id }}{% endblock %}
+
+{% block content %}
+<h1>用户画像: {{ user.user_id }}</h1>
+<p>共 {{ user.review_count }} 条评论</p>
+
+<h3 class="mt-4">偏好标签</h3>
+<div class="tag-cloud mb-4">
+{% for tag in user.preference_tags or [] %}
+{% set sent = tag.avg_sentiment %}
+{% if sent > 0.65 %}
+<span class="tag-item tag-positive">{{ tag.word }} ({{ "%.1f"|format(tag.weight) }})</span>
+{% elif sent > 0.35 %}
+<span class="tag-item tag-neutral">{{ tag.word }} ({{ "%.1f"|format(tag.weight) }})</span>
+{% else %}
+<span class="tag-item tag-negative">{{ tag.word }} ({{ "%.1f"|format(tag.weight) }})</span>
+{% endif %}
+{% endfor %}
+</div>
+
+<h3>评论历史</h3>
+<table class="table table-hover">
+    <thead>
+        <tr><th>日期</th><th>菜品</th><th>评分</th><th>评论</th><th>关键词</th></tr>
+    </thead>
+    <tbody>
+    {% for r in reviews %}
+    <tr>
+        <td>{{ r.date }}</td>
+        <td><a href="{{ url_for('dish_detail', dish_id=r.dish_id) }}">{{ r.dish_name }}</a></td>
+        <td>{{ r.rating }} / 5</td>
+        <td>{{ r.review_text[:60] }}{% if r.review_text|length > 60 %}...{% endif %}</td>
+        <td>
+            <div class="review-keywords">
+            {% for kw in (r.keywords or [])[:4] %}
+            <span class="review-keyword">{{ kw.word }}</span>
+            {% endfor %}
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('recommend', user_id=user.user_id) }}" class="btn btn-success">为此用户推荐菜品</a>
+<a href="{{ url_for('index') }}" class="btn btn-outline-secondary">返回</a>
+{% endblock %}
