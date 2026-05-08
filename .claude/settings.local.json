@@ -25,7 +25,9 @@
       "Bash(python scripts/convert_dianping.py --target-rows 75000)",
       "Bash(python *)",
       "Bash(curl *)",
-      "Bash(jq *)"
+      "Bash(jq *)",
+      "Bash(git *)",
+      "Bash(claude update *)"
     ]
   }
 }

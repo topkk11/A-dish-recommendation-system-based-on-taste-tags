@@ -24,13 +24,13 @@ def build_dish_profiles(reviews_df):
         tag_text_parts = []
         for word, stats in keyword_stats.items():
             avg_sent = sum(stats['sentiments']) / len(stats['sentiments'])
+            repeat = max(1, int(stats['freq'] * max(SENTIMENT_FLOOR, avg_sent) + 0.5))
             tags.append({
                 'word': word,
                 'freq': stats['freq'],
-                'avg_sentiment': round(avg_sent, 3)
+                'avg_sentiment': round(avg_sent, 3),
+                'repeat_count': repeat
             })
-            # Repeat keyword by weighted frequency for TF-IDF
-            repeat = max(1, int(stats['freq'] * max(SENTIMENT_FLOOR, avg_sent) + 0.5))
             tag_text_parts.extend([word] * repeat)
 
         # Sort tags by frequency descending

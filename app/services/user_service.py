@@ -24,13 +24,14 @@ def build_user_profiles(reviews_df):
         for word, stats in keyword_stats.items():
             avg_sent = sum(stats['sentiments']) / len(stats['sentiments'])
             weight = stats['freq'] * max(SENTIMENT_FLOOR, avg_sent)
+            repeat = max(1, int(weight + 0.5))
             tags.append({
                 'word': word,
                 'weight': round(weight, 2),
                 'freq': stats['freq'],
-                'avg_sentiment': round(avg_sent, 3)
+                'avg_sentiment': round(avg_sent, 3),
+                'repeat_count': repeat
             })
-            repeat = max(1, int(weight + 0.5))
             tag_text_parts.extend([word] * repeat)
 
         tags.sort(key=lambda t: t['weight'], reverse=True)
